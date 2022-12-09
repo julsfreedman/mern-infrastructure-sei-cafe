@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+//import React from 'react'; (this should happen automatically with CRA but ANton had  to manually add it to get his to work.  Mine seems to be working without it)
 
 function App() {
   return (
