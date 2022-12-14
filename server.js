@@ -2,6 +2,10 @@ const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
+// Always require and configure near the top
+require('dotenv').config();
+
+require("./config/database")
 
 const app = express();
 
@@ -18,7 +22,8 @@ app.use(express.static(path.join(__dirname, 'build')));
 //A single "catch all" route is required to serve the index.html when any non-AJAX "API" request is received by the Express app:
 app.use(express.static(path.join(__dirname, 'build')));
 
-// Put API routes here, before the "catch all" route
+// Place API ROUTES here, BEFORE the "catch all" route (very important to put ahead of catch all).
+app.use('/api/users', require('./routes/api/users'));
 
 // The following "catch all" route (note the *) is necessary
 // to return the index.html ('/*') on all non-AJAX requests

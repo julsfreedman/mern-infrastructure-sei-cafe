@@ -1,25 +1,34 @@
-import logo from './logo.svg';
 import './App.css';
 //import React from 'react'; (this should happen automatically with CRA but ANton had  to manually add it to get his to work.  Mine seems to be working without it)
+import { useState } from 'react'
+// Import the following components
+import AuthPage from './pages/AuthPage';
+import NewOrderPage from './pages/NewOrderPage';
+import OrderHistoryPage from './pages/OrderHistoryPage';
+import NavBar from './components/NavBar';
+// Add the following import
+import { Routes, Route } from 'react-router-dom';
+
+
 
 function App() {
+  const [user, setUser] = useState(null) // null b/c we are expecting an object
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main className="App">
+      {
+        user ?
+          <>
+            <NavBar />
+            <Routes>
+              <Route path="/orders/new" element={<NewOrderPage />} />
+              <Route path="/orders" element={<OrderHistoryPage />} />
+            </Routes>
+          </>
+          :
+          <AuthPage />
+      }
+    </main>
   );
 }
 
