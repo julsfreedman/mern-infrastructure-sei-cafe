@@ -8,25 +8,27 @@ import OrderHistoryPage from './pages/OrderHistoryPage';
 import NavBar from './components/NavBar';
 // Add the following import
 import { Routes, Route } from 'react-router-dom';
+//import getUser to set the user state in the function App()
+import { getUser } from './utilities/users-service';
 
 
-
+//When the page refreshes, set the user state (initialize the user state) with this function:
 function App() {
-  const [user, setUser] = useState(null) // null b/c we are expecting an object
+  const [user, setUser] = useState(getUser())
 
   return (
     <main className="App">
       {
         user ?
           <>
-            <NavBar />
+            <NavBar name={user.name} />
             <Routes>
               <Route path="/orders/new" element={<NewOrderPage />} />
               <Route path="/orders" element={<OrderHistoryPage />} />
             </Routes>
           </>
           :
-          <AuthPage />
+          <AuthPage setUser={setUser}/>
       }
     </main>
   );

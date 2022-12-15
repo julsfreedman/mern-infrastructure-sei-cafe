@@ -24,4 +24,23 @@ export async function signUp(userData) {
     }
 }
 
+
+export async function login(credentials) {
+    const res = await fetch(`${BASE_URL}/login`, {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(credentials)
+    })
+
+    // Check if request was successful
+    if (res.ok) {
+        // res.json() will resolve to the JWT
+        return res.json()
+    } else {
+        throw new Error('Invalid Sign Up');
+    }
+}
+
+
+
 //IMPORTANT: The fetch method will not raise an error unless there's a network failure. This is why we need to check the res.ok property to see if the server returned a successful response (status code in the 200s).
