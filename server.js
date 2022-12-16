@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
+const { createRequire } = require('module');
 // Always require and configure near the top
 require('dotenv').config();
 
@@ -21,6 +22,11 @@ app.use(express.static(path.join(__dirname, 'build')));
 
 //A single "catch all" route is required to serve the index.html when any non-AJAX "API" request is received by the Express app:
 app.use(express.static(path.join(__dirname, 'build')));
+
+
+// Middleware to verify token and assign user object of payload to req.user.
+// Be sure to mount before routes
+app.use(require('./config/checkToken'));
 
 // Place API ROUTES here, BEFORE the "catch all" route (very important to put ahead of catch all).
 app.use('/api/users', require('./routes/api/users'));
